@@ -1,45 +1,81 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { Accordion, Container, VStack } from "@chakra-ui/react";
+import { AddIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import React from "react";
+import Task from "./components/Task/Task";
+import NewTask from "./components/Task/Task";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  function scrollTop() {
+    window.scrollTo(0,0)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <VStack>
+      <Container>
+        <Accordion allowMultiple={false}>
+          <NewTask title="Nova Tarefa" icon={<AddIcon />} />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+          <Task />
+        </Accordion>
+        <ArrowUpIcon
+          position="fixed"
+          right="3vw"
+          bottom="3vw"
+          width="50px"
+          height="50px"
+          padding="10px"
+          backgroundColor="green.400"
+          borderRadius="50%"
+          color="gray.50"
+          cursor="pointer"
+          _hover={{ bg: "green.300" }}
+          onClick={scrollTop}
+        />
+      </Container>
+    </VStack>
+  );
 }
 
-export default App
+export default App;
