@@ -1,12 +1,16 @@
 export default class Model {
-  constructor(table) {
-    const Table = localStorage.getItem(table);
-    !Table ? null : (this.table = Table);
+  constructor() {
+    this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   }
-  get(columnName) {
-    return !this.table[columnName] ? false : this.table[columnName];
+  addTask(data) {
+    this.tasks.push(data);
+    this.saveTasks();
+    console.log("new task added and saved", this.getTasks());
   }
-  set(ColumnName) {
-      
+  saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(this.tasks));
+  }
+  getTasks() {
+    return !this.tasks ? null : this.tasks;
   }
 }

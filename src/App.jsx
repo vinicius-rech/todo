@@ -1,63 +1,37 @@
-import { Accordion, Container, VStack } from "@chakra-ui/react";
+import { Accordion, Container, Skeleton, VStack } from "@chakra-ui/react";
 import { AddIcon, ArrowUpIcon } from "@chakra-ui/icons";
-import React from "react";
-import Task from "./components/Task/Task";
-import NewTask from "./components/Task/Task";
+import React, { useEffect, useContext } from "react";
+import { TasksProvider } from "./contexts/Tasks";
+import TaskListing from "./components/TaskListing";
+import AddNewTask from "./components/AddNewTask";
+import Task from "./components/Task";
 
 function App() {
-  function scrollTop() {
-    window.scrollTo(0,0)
-  }
+  const scrollTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <VStack>
-      <Container>
+      <Container maxW="x1">
         <Accordion allowMultiple={false}>
-          <NewTask title="Nova Tarefa" icon={<AddIcon />} />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
-          <Task />
+          <TasksProvider>
+            <Task internalKey={999} />
+            {/* <TaskListing /> */}
+          </TasksProvider>
+          {/* <AddNewTask icon={} /> */}
+          {/* <Task /> */}
+
+          {/* {!tasks ? (
+            <Skeleton width="100%" height="3px" />
+          ) : (
+            <div>
+              <h1>Tarefas</h1>
+              <TasksProvider>
+                <Task key={index}  />
+              </TasksProvider>
+            </div>
+          )} */}
         </Accordion>
         <ArrowUpIcon
           position="fixed"
