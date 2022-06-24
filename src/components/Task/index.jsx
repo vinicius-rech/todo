@@ -13,29 +13,23 @@ import {
   useToast,
   Progress,
 } from "@chakra-ui/react";
-
+import { v4 as uuidv4 } from "uuid";
 import React, { useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../contexts/Tasks";
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 
 function Task(props) {
-  const { handleSubmitNewTask, errorStatus, success, newTask } =
-    useContext(TasksContext);
-
+  const { submit, errorStatus, success, setSucc } = useContext(TasksContext);
   const [isNewTask] = useState(props.isNewTask ?? false);
-
-  // form
   const [title, updateTitle] = useState(props.title ?? "");
   const [startDate, updateStartDate] = useState(props.startDate ?? "");
   const [endDate, updateEndDate] = useState(props.endDate ?? "");
   const [description, updateDescription] = useState(props.description ?? "");
   const [progress, updateProgress] = useState(0);
-
   const [isTitleFilled, setIsTitleFilled] = useState(false);
   const [isStartDateFilled, setIsStartDateFilled] = useState(false);
   const [isEndDateFilled, setIsEndDateFilled] = useState(false);
   const [isDescriptionFilled, setIsDescriptionFilled] = useState(false);
-
   const _hover = { bg: "red.400", color: "gray.50" };
   const _expanded = { bg: "red.500", color: "gray.50" };
   const toast = useToast();
@@ -67,9 +61,6 @@ function Task(props) {
     validateInput(startDate, isStartDateFilled, setIsStartDateFilled);
     validateInput(endDate, isEndDateFilled, setIsEndDateFilled);
     validateInput(description, isDescriptionFilled, setIsDescriptionFilled);
-
-    console.log("vazio?", title.trim().length === 0);
-    console.log("status: ", isTitleFilled);
   }
 
   function formReset() {
@@ -89,7 +80,6 @@ function Task(props) {
   function handleError() {
     switch (errorStatus) {
       case "hasError":
-        console.log("hasError");
         toast({
           title: "Ops!",
           description: "Por favor preencha todos os campos!",
@@ -99,6 +89,7 @@ function Task(props) {
         });
         break;
       case "hasNoError":
+        setSucc(false);
         toast({
           title: "Sucesso =)",
           description: "Nova tarefa adicionada com sucesso",
@@ -114,7 +105,12 @@ function Task(props) {
   }
 
   useEffect(() => {
-    if (success) formReset();
+    if (success) {
+      console.log("asokdpoasdkpoask");
+      // formReset();
+      // setSucc(false);
+      // updateProgress(0);
+    }
   }, [success]);
 
   useEffect(() => {
@@ -127,7 +123,7 @@ function Task(props) {
 
   if (!isNewTask) {
     return (
-      <AccordionItem key={props.internalKey}>
+      <AccordionItem>
         <h2>
           <AccordionButton _hover={_hover} _expanded={_expanded}>
             <Box flex="1" textAlign="left">
@@ -140,7 +136,7 @@ function Task(props) {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              handleSubmitNewTask([title, startDate, endDate, description]);
+              submit([title, startDate, endDate, description]);
             }}
           >
             <Grid templateColumns="1fr" rowGap="10px">
@@ -203,7 +199,7 @@ function Task(props) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          handleSubmitNewTask([title, startDate, endDate, description]);
+          submit([title, startDate, endDate, description]);
         }}
         style={{ display: "flex", flexDirection: "column", rowGap: 10 }}
       >

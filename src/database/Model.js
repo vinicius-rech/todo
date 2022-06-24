@@ -5,12 +5,14 @@ export default class Model {
     this.newTask = null;
   }
 
-  createNewTaskId() {
-    return (this.newTask = { 4: uuidv4(), ...newTask });
+  createNewTaskId(task) {
+    return (task = { 4: uuidv4(), ...task });
   }
 
-  addTask() {
-    this.tasks.push(this.newTask);
+  addTask(task) {
+    this.newTask = this.createNewTaskId(task);
+    this.tasks.push(task);
+    this.saveTasks();
   }
 
   saveTasks() {
@@ -22,17 +24,8 @@ export default class Model {
   }
 
   createTask(task) {
-    console.log("creating");
     if (!this.taskHasId(task)) {
-      try {
-        this.newTask = task;
-        this.addTask();
-        this.saveTasks();
-        console.log("new task: ", this.tasks);
-        return true;
-      } catch (error) {
-        return false;
-      }
+      this.addTask(task);   
     } else {
       console.log("n e nova");
     }
