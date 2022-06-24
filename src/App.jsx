@@ -1,39 +1,69 @@
-import { Accordion, Container, Skeleton, VStack } from "@chakra-ui/react";
+import {
+  Accordion,
+  Container,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { AddIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import React, { useEffect, useContext } from "react";
 import { TasksProvider } from "./contexts/Tasks";
 import TaskListing from "./components/TaskListing";
-import AddNewTask from "./components/AddNewTask";
 import Task from "./components/Task";
 
 function App() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const scrollTop = () => {
     window.scrollTo(0, 0);
   };
 
   return (
     <VStack>
-      <Container maxW="x1">
-        <Accordion allowMultiple={false}>
-          <TasksProvider>
-            <Task internalKey={999} />
-            {/* <TaskListing /> */}
-          </TasksProvider>
-          {/* <AddNewTask icon={} /> */}
-          {/* <Task /> */}
-
-          {/* {!tasks ? (
-            <Skeleton width="100%" height="3px" />
-          ) : (
-            <div>
-              <h1>Tarefas</h1>
+      <Container maxW="100%">
+        <TasksProvider>
+          <Accordion allowMultiple={false}>
+            <TaskListing />
+          </Accordion>
+        </TasksProvider>
+        <Modal
+          closeOnOverlayClick={false}
+          blockScrollOnMount={true}
+          onClose={onClose}
+          isOpen={isOpen}
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Nova Tarefa</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
               <TasksProvider>
-                <Task key={index}  />
+                <Task isNewTask={true} />
               </TasksProvider>
-            </div>
-          )} */}
-        </Accordion>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
         <ArrowUpIcon
+          position="fixed"
+          left="3vw"
+          bottom="3vw"
+          width="50px"
+          height="50px"
+          padding="10px"
+          backgroundColor="gray.900"
+          borderRadius="50%"
+          color="gray.50"
+          cursor="pointer"
+          _hover={{ bg: "gray.600" }}
+          onClick={scrollTop}
+        />
+        <AddIcon
           position="fixed"
           right="3vw"
           bottom="3vw"
@@ -45,7 +75,7 @@ function App() {
           color="gray.50"
           cursor="pointer"
           _hover={{ bg: "green.300" }}
-          onClick={scrollTop}
+          onClick={onOpen}
         />
       </Container>
     </VStack>
