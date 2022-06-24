@@ -11,7 +11,7 @@ export default class Model {
 
   addTask(task) {
     this.newTask = this.createNewTaskId(task);
-    this.tasks.push(task);
+    this.tasks.push(this.newTask);
     this.saveTasks();
   }
 
@@ -25,9 +25,9 @@ export default class Model {
 
   createTask(task) {
     if (!this.taskHasId(task)) {
-      this.addTask(task);   
+      this.addTask(task);
     } else {
-      console.log("n e nova");
+      // @todo implement old task edit
     }
   }
 

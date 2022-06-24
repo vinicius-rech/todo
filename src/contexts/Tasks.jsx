@@ -5,9 +5,9 @@ import Model from "../database/Model";
 export const TasksContext = createContext("");
 
 export const TasksProvider = ({ children }) => {
-  const [tasks, setTasks] = useState(new Model().getTasks() || []);
+  const [tasks] = useState(new Model().getTasks() || []);
   const [success, updateSuccess] = useState(false);
-  const [errorStatus, updateErrorStatus] = useState("initial");
+  const [errorStatus] = useState("initial");
   const [newTask, updateNewTask] = useState();
 
   function setSuccess(boolValue) {
@@ -17,9 +17,9 @@ export const TasksProvider = ({ children }) => {
   function saveNewTask(task) {
     if (errorStatus == "hasNoError" || errorStatus == "initial") {
       const model = new Model();
-      model.createTask(task) ? updateSuccess(true) : updateSuccess(false);
+      model.createTask(task);
+      updateSuccess(true);
     }
-    console.log("sucessoaaa", success);
   }
 
   function setNewTask(task, callback) {
@@ -36,7 +36,7 @@ export const TasksProvider = ({ children }) => {
       value={{
         tasks,
         submit: handleSubmitNewTask,
-        setSucc: setSuccess,
+        setSuccess,
         newTask,
         errorStatus,
         success,
